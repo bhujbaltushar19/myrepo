@@ -20,15 +20,9 @@
 	var what_type = g_form.getValue('u_what_type');
 	jslog('Value of "What Type": '+what_type);
 	jslog('Value of "newValue": '+newValue);
-	if(newValue != 'your_choice') {
+	
 		g_form.clearOptions('u_what_type');
-		jslog('Cleared values from option field "What Type"');
-		g_form.setMandatory('u_what_type',true);
-		g_form.setVisible('u_what_type',true);
-		g_form.clearValue('u_other_department');
-		g_form.setMandatory('u_other_department',false);
-		g_form.setVisible('u_other_department',false);
-		jslog('Setting required parameters for fields "What type" and "Enter department" from If block');
+
 		if(newValue == 'hr') {
 			jslog('Adding options to "What type" related to Human Resource');
 			g_form.addOption('u_what_type','hr1','Human Resource 1');
@@ -47,16 +41,10 @@
 			g_form.addOption('u_what_type','facilities1','Facilities 1');
 			g_form.addOption('u_what_type','facilities2','Facilities 2');
 		}
-
-	}
-	else{
-		jslog('Setting required parameters for fields "What type" and "Enter department" from Else block');
-		g_form.setMandatory('u_what_type',false);
-		g_form.setVisible('u_what_type',false);
-		g_form.setVisible('u_other_department',true);
-		g_form.setMandatory('u_other_department',false);
-	}
-	
+		else {
+			g_form.addOption('u_what_type','other','Other');
+		}
+		
 	if(isLoading && !g_form.isNewRecord()) {
 			g_form.setValue('u_what_type',what_type);
 			
@@ -71,7 +59,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>a12b9b28dba33200e4f2fcdfbf961945</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>14</sys_mod_count>
         <sys_name>NeedIt Request Type Options</sys_name>
         <sys_overrides/>
         <sys_package display_value="NeedIt" source="x_61836_needit">bdfe8260db233200e4f2fcdfbf9619aa</sys_package>
@@ -80,7 +68,7 @@
         <sys_scope display_value="NeedIt">bdfe8260db233200e4f2fcdfbf9619aa</sys_scope>
         <sys_update_name>sys_script_client_a12b9b28dba33200e4f2fcdfbf961945</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-06-21 12:30:47</sys_updated_on>
+        <sys_updated_on>2017-06-21 13:33:06</sys_updated_on>
         <table>x_61836_needit_needit</table>
         <type>onChange</type>
         <ui_type>0</ui_type>

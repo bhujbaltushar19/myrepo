@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_61836_needit_needit</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Check Date Logic</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
+	
+	// Add your code here
+	
+	//Validation of Start Date and End Date Starts from here
+	var startDate = new GlideDateTime(current.start_date);
+	var endDate = new GlideDateTime(current.end_date);
+	var currentDate = new GlideDateTime();
+	var daysToAdd = 90;
+	var setFlag;
+	
+	//Checking whether Start Date is not in past
+	if(startDate.before(currentDate))
+		{
+		gs.addInfoMessage('checking before');
+		gs.addErrorMessage('Start date cannot precede Current Date.');
+		setFlag = false;
+		current.setAbortAction(true);
+	}
+	else
+		{
+		setFlag = true;
+	}
+	
+	//Checking whether Start Date is not after End Date and End Date is not empty
+	if(setFlag)
+		{
+		if(endDate.toString() == '')
+			{
+			gs.addErrorMessage('Please select End Date.');
+			setFlag = false;
+			current.setAbortAction(true);
+		}
+		else
+			{
+			if(endDate.before(startDate))
+				{
+				gs.addErrorMessage('End date cannot precede Start Date.');
+				setFlag = false;
+				current.setAbortAction(true);
+			}
+		}
+		
+	}
+	
+	//Checking whether End Date is not more than 90 days from Start Date
+	
+	if(setFlag)
+		{
+		var duration = GlideDateTime.subtract(startDate,endDate);
+		var dateDifference = duration.getDisplayValue().substring(0,duration.getDisplayValue().indexOf(' ')).trim();
+		
+		if(dateDifference > 90)
+			{
+			gs.addErrorMessage('End date can be selected only upto 90 days from Start date. Difference between selected dates is: '+dateDifference+' days.');
+			current.setAbortAction(true);
+		}
+	}
+	
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-07-13 14:41:21</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>8dcf95bbdb7f7200e4f2fcdfbf9619cc</sys_id>
+        <sys_mod_count>45</sys_mod_count>
+        <sys_name>Check Date Logic</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="NeedIt" source="x_61836_needit">bdfe8260db233200e4f2fcdfbf9619aa</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="NeedIt">bdfe8260db233200e4f2fcdfbf9619aa</sys_scope>
+        <sys_update_name>sys_script_8dcf95bbdb7f7200e4f2fcdfbf9619cc</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-07-13 16:36:06</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=8dcf95bbdb7f7200e4f2fcdfbf9619cc"/>
+</record_update>

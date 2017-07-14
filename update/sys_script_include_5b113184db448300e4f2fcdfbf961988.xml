@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_61836_needit.GetApprovers</api_name>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>GetApprovers</name>
+        <script><![CDATA[var GetApprovers = Class.create();
+GetApprovers.prototype = {
+    initialize: function() {
+    },
+	getApprovers:function(){
+		gs.addInfoMessage('called');
+		var gp = new GlideRecord('u_approvers');
+		var catId = current.variables.u_catalog_item_id;
+		gs.addInfoMessage(catId);
+		
+		gp.addQuery('u_catalog_item',catId);
+		gp.addQuery('u_approver_type','A');
+		gp.addQuery('u_active',1);
+		gp.query();
+		
+		while(gp.next()){
+			g_form.addOption('u_a_approver',gp.u_user,gp.u_user_name);
+		}
+		
+	},
+    type: 'GetApprovers'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-07-14 11:05:34</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>5b113184db448300e4f2fcdfbf961988</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>GetApprovers</sys_name>
+        <sys_package display_value="NeedIt" source="x_61836_needit">bdfe8260db233200e4f2fcdfbf9619aa</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="NeedIt">bdfe8260db233200e4f2fcdfbf9619aa</sys_scope>
+        <sys_update_name>sys_script_include_5b113184db448300e4f2fcdfbf961988</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-07-14 11:30:45</sys_updated_on>
+    </sys_script_include>
+</record_update>
